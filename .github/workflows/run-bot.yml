@@ -2,10 +2,8 @@ name: Run Power Outage Bot
 
 on:
   schedule:
-    # ساعت 03:30 به وقت UTC (7 صبح ایران) هر روز اجرا می‌شود
-    - cron: '30 3 * * *'
+    - cron: '30 3 * * *' # ساعت 7 صبح ایران
   workflow_dispatch:
-    # این خط به شما اجازه می‌دهد که به صورت دستی هم ورک‌فلو را اجرا کنید
 
 jobs:
   run_bot:
@@ -20,7 +18,13 @@ jobs:
         with:
           python-version: '3.10'
 
-      - name: Install dependencies
+      # --- مرحله جدید: نصب مرورگر و درایور ---
+      - name: Install Chromium Browser and Driver
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y chromium-browser chromium-chromedriver
+
+      - name: Install Python dependencies
         run: |
           python -m pip install --upgrade pip
           pip install -r requirements.txt
