@@ -28,7 +28,6 @@ TELEGRAM_CHAT_ID = os.environ.get("TELEGRAM_CHAT_ID")
 # -----------------
 
 def send_to_telegram(message):
-    # ... (این تابع بدون تغییر باقی می‌ماند) ...
     api_url = f"https://api.telegram.org/bot{TELEGRAM_TOKEN}/sendMessage"
     payload = {'chat_id': TELEGRAM_CHAT_ID, 'text': message, 'parse_mode': 'Markdown'}
     try:
@@ -45,12 +44,15 @@ def main():
         options.add_argument("--headless")
     options.add_argument("--no-sandbox")
     options.add_argument("--disable-dev-shm-usage")
+    # --- این خط کد، مشکل را حل می‌کند ---
+    # آدرس صحیح مرورگر را به اسکریپت می‌دهیم
+    options.binary_location = "/usr/bin/chromium-browser"
+    # -----------------------------------
     options.add_experimental_option('excludeSwitches', ['enable-logging'])
-
-    # راه‌اندازی درایور به صورت ساده، بدون نیاز به Service و Manager
+    
+    # راه‌اندازی درایور بدون نیاز به Service یا Manager
     driver = webdriver.Chrome(options=options)
     
-    # ... (بقیه کد شما بدون تغییر باقی می‌ماند) ...
     wait = WebDriverWait(driver, 25)
     final_message = ""
     try:
