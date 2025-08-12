@@ -22,7 +22,6 @@ ADDRESS_ALIASES = {
 }
 STREETS_TO_FILTER = list(ADDRESS_ALIASES.keys())
 
-# خواندن اطلاعات از Secrets
 TELEGRAM_TOKEN = os.environ.get("TELEGRAM_TOKEN")
 TELEGRAM_CHAT_ID = os.environ.get("TELEGRAM_CHAT_ID")
 # -----------------
@@ -31,7 +30,7 @@ def send_to_telegram(message):
     api_url = f"https://api.telegram.org/bot{TELEGRAM_TOKEN}/sendMessage"
     payload = {'chat_id': TELEGRAM_CHAT_ID, 'text': message, 'parse_mode': 'Markdown'}
     try:
-        requests.post(api_url, json=payload)
+        requests.post(api_url, json=payload, timeout=10) # اضافه کردن تایم‌اوت برای ارسال
     except Exception as e:
         print(f"❌ خطای اتصال به تلگرام: {e}")
 
@@ -44,14 +43,15 @@ def main():
         options.add_argument("--headless")
     options.add_argument("--no-sandbox")
     options.add_argument("--disable-dev-shm-usage")
-    # --- این خط کد، مشکل را حل می‌کند ---
-    # آدرس صحیح مرورگر را به اسکریپت می‌دهیم
     options.binary_location = "/usr/bin/chromium-browser"
-    # -----------------------------------
     options.add_experimental_option('excludeSwitches', ['enable-logging'])
     
-    # راه‌اندازی درایور بدون نیاز به Service یا Manager
     driver = webdriver.Chrome(options=options)
+    
+    # --- این خط کد، مشکل را حل می‌کند ---
+    # تنظیم حداکثر زمان مجاز برای بارگذاری کامل یک صفحه
+    driver.set_page_load_timeout(45)
+    # -----------------------------------
     
     wait = WebDriverWait(driver, 25)
     final_message = ""
@@ -93,7 +93,7 @@ def main():
                 final_message = "\n".join(message_parts)
                 print("\n--- پیام نهایی آماده ارسال ---\n" + final_message)
     except TimeoutException:
-        final_message = f"✅ در تاریخ {today_jalali} هیچ جدول خاموشی‌ای یافت نشد."
+        final_message = f"✅ در تاریخ {today_jalali} هیچ جدول خاموشی‌ای یافت نشد (یا سایت بسیار کند بود)."
     except Exception as e:
         final_message = f"❌ یک خطای غیرمنتظره در ربات رخ داد: {e}"
     finally:
