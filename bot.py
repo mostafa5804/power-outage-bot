@@ -28,8 +28,9 @@ ADDRESS_ALIASES = {
 STREETS_TO_FILTER = list(ADDRESS_ALIASES.keys())
 
 # --- تنظیمات تلگرام ---
-TELEGRAM_TOKEN = "8373835143:AAHSrSDepq5NrZXheNzoajY6IYXY-T14Syc"
-TELEGRAM_CHAT_ID = "-1001083404790"
+# --- تنظیمات تلگرام (خواندن از Secrets) ---
+TELEGRAM_TOKEN = os.environ.get("TELEGRAM_TOKEN")
+TELEGRAM_CHAT_ID = os.environ.get("TELEGRAM_CHAT_ID")
 # ----------------------------------------------- #
 
 def normalize_text(text):
@@ -126,4 +127,5 @@ def main():
         print("\n🚀 کار ربات تمام شد.")
 
 if __name__ == "__main__":
+
     main()
