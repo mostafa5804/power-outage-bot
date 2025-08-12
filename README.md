@@ -3,8 +3,8 @@
 # 🤖 ربات اطلاع‌رسانی قطعی برق 🤖
 
 <p>
-  <a href="https://github.com/YourUsername/YourRepo/actions/workflows/run-bot.yml">
-    <img src="https://github.com/YourUsername/YourRepo/actions/workflows/run-bot.yml/badge.svg" alt="GitHub Actions Status" />
+  <a href="https://github.com/mostafa5804/power-outage-bot/actions/workflows/run-bot.yml">
+    <img src="https://github.com/mostafa5804/power-outage-bot/actions/workflows/run-bot.yml/badge.svg" alt="GitHub Actions Status" />
   </a>
   <img src="https://img.shields.io/badge/Python-3.10-blue.svg" alt="Python Version" />
   <img src="https://img.shields.io/badge/Library-Selenium-green.svg" alt="Library" />
